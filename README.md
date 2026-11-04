@@ -1,85 +1,95 @@
-Sistema Backend - API REST
-Información General
-Nombre del Coder: Jose Vargas
-Clan: Centurion
-URL del Repositorio: https://github.com/Josevar-99/PRUEBA_NODE.JS
-Tecnologías Utilizadas
-Runtime: Node.js (ES Modules)
-Framework: Express.js
-Lenguaje: TypeScript (tsx)
-ORM: Sequelize
-Base de Datos: PostgreSQL
-Autenticación: JSON Web Tokens (JWT) y bcrypt para encriptación
-Manejo de Archivos: Multer
-Instructivo de Instalación
+# Clinic Inventory API
 
-1. Clonar el repositorio
-   git clone https://github.com/Josevar-99/PRUEBA_NODE.JS.git
-   cd PRUEBA_NODE.JS
+REST API for managing medication inventory across clinics, built with Node.js, Express, TypeScript and PostgreSQL.
 
-2. Instalar las dependencias
-   npm install
+**Author:** Jose Vargas
 
-3. Configurar las variables de entorno
+## Stack
 
-Crea un archivo llamado .env en la raíz del proyecto con la siguiente estructura:
+- Node.js (ES Modules) and Express
+- TypeScript, run with tsx
+- Sequelize ORM and PostgreSQL
+- JWT authentication and bcrypt password hashing
+- Multer for file uploads
 
-PORT=3001
-DB_NAME=base_prueba_db
-DB_USER=postgres
-DB_PASSWORD=tu_contrasena_postgres
-DB_HOST=localhost
-DB_PORT=5432
-JWT_SECRET=tu_secreto_jwt_super_seguro
+## Requirements
 
-Nota: Reemplaza los valores de ejemplo por las credenciales correspondientes a tu entorno local.
+- Node.js 20 or later
+- PostgreSQL
 
-Ejecutar el Proyecto
+## Installation
 
-Para levantar el servidor backend en modo desarrollo, utiliza:
-
-npm run dev
-
-El proyecto utiliza tsx watch, por lo que el servidor se reiniciará automáticamente cuando detecte cambios en el código.
-
-Salida esperada en consola
-Conexión a la base de datos establecida exitosamente.
-Modelos sincronizados con la base de datos.
-Servidor corriendo en el puerto 3001
-
-Ejecutar los Seeders
-
-Para poblar las tablas de la base de datos utilizando los registros iniciales:
-
-npm run db:seed
-
-Endpoints Principales
-Autenticación y Usuarios
-
-Base URL: /api/users
-
-Método Endpoint Descripción Protección
-POST /api/users/login Autenticación de usuario y generación de token JWT Público
-POST /api/users Registro de un nuevo usuario Bearer Token + rol admin
-PUT /api/users/:id Actualización de datos de usuario Protegido
-DELETE /api/users/:id Eliminación de usuario Protegido
-Otras Rutas del Sistema
-Ruta Descripción
-/api/clinics Gestión de clínicas asociadas por NIT
-/api/inventory Control de inventarios
-/api/medications Catálogo de medicamentos
-/api/requests Solicitudes y trámites internos
-/api/stores Gestión de bodegas o almacenes
-Comandos Disponibles
-
-# Instalar dependencias
-
+```
+git clone https://github.com/Josevar-99/gestion-inventario-clinicas.git
+cd gestion-inventario-clinicas
 npm install
+cp .env.example .env
+```
 
-# Ejecutar el proyecto en modo desarrollo
+Edit `.env` with the credentials of your local PostgreSQL instance. To run PostgreSQL with Docker instead, start the service defined in `docker-compose.yml`:
 
+```
+docker compose up -d
+```
+
+## Environment variables
+
+| Variable | Description |
+|---|---|
+| `PORT` | Server port |
+| `DB_NAME` | Database name |
+| `DB_USER` | Database user |
+| `DB_PASSWORD` | Database password |
+| `DB_HOST` | Database host |
+| `DB_PORT` | Database port |
+| `JWT_SECRET` | Secret used to sign tokens |
+
+## Running the project
+
+```
 npm run dev
+```
 
-# Ejecutar los seeders
+The server restarts automatically on code changes (`tsx watch`). Expected output:
 
+```
+Database connection established successfully.
+Models synchronized with the database.
+Server running on port 3001
+```
+
+Seed the database with initial records:
+
+```
 npm run db:seed
+```
+
+## Endpoints
+
+### Authentication and users
+
+Base URL: `/api/users`
+
+| Method | Route | Description | Access |
+|---|---|---|---|
+| POST | `/api/users/login` | Authenticate and receive a JWT | Public |
+| POST | `/api/users` | Register a new user | Bearer token, admin role |
+| PUT | `/api/users/:id` | Update a user | Bearer token |
+| DELETE | `/api/users/:id` | Delete a user | Bearer token |
+
+### Other resources
+
+| Route | Description |
+|---|---|
+| `/api/clinics` | Clinics, identified by NIT |
+| `/api/inventory` | Inventory control |
+| `/api/medications` | Medication catalog |
+| `/api/requests` | Internal requests |
+| `/api/stores` | Warehouses |
+
+## Scripts
+
+| Script | Description |
+|---|---|
+| `npm run dev` | Development server with automatic restart |
+| `npm run db:seed` | Populate the database with initial data |
